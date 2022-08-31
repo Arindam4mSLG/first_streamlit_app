@@ -33,7 +33,11 @@ def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
       my_cur.execute("select * from fruit_load_list ")
       return my_cur.fetchall()
-  
+
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+      my_cur.execute("insert into fruit_load_list values('From Streamlite')")
+      return "Thanks for adding" + new_fruit
 
 streamlit.header("Fruityvice Fruit Advice!")
 try:
@@ -57,12 +61,11 @@ my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
-streamlit.header("The fruit load list:")
-my_data_rows = get_fruit_load_list()
-streamlit.dataframe(my_data_rows)
+if streamlit.button('Get the list'):
+  streamlit.header("The fruit load list:")
+  my_data_rows = get_fruit_load_list()
+  streamlit.dataframe(my_data_rows)
 
 fruits_2b_added = streamlit.text_input("Fruit Asked For Adding","")
-if fruits_2b_added is None or fruits_asked == "" :
-  streamlit.text("blank")
-else:
-  my_cur.execute("insert into fruit_load_list values('From Streamlite')")
+if streamlit.button('Add a fruit'):
+  back_from_fn = insert_row_snowflake(fruits_2b_added)
