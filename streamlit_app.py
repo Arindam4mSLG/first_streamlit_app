@@ -29,6 +29,11 @@ def get_fruityvice_data(this_fruit_choice):
   fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
   return fruityvice_normalized
 
+def get_fruit_load_list():
+  my_cur.execute("select * from fruit_load_list ")
+  my_data_row = my_cur.fetchall()
+  return my_data_row
+
 streamlit.header("Fruityvice Fruit Advice!")
 try:
   fruits_asked = streamlit.text_input("Fruit Asked")
@@ -42,7 +47,8 @@ try:
 except URLError as e:
   streamlit.error()
 
-streamlit.stop()
+# streamlit.stop()
+
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
@@ -50,10 +56,8 @@ my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
-my_cur.execute("select * from fruit_load_list ")
-my_data_row = my_cur.fetchall()
 streamlit.header("The fruit load list:")
-streamlit.dataframe(my_data_row)
+streamlit.dataframe(get_fruit_load_list)
 
 fruits_2b_added = streamlit.text_input("Fruit Asked","")
 if fruits_2b_added is None or fruits_asked == "" :
