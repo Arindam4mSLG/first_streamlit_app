@@ -36,7 +36,7 @@ def get_fruit_load_list():
 
 def insert_row_snowflake(new_fruit):
     with my_cnx.cursor() as my_cur:
-      my_cur.execute("insert into fruit_load_list values('From Streamlite')")
+      my_cur.execute("insert into fruit_load_list values('" + new_fruit + "')")
       return "Thanks for adding" + new_fruit
 
 streamlit.header("Fruityvice Fruit Advice!")
@@ -69,3 +69,6 @@ if streamlit.button('Get the list'):
 fruits_2b_added = streamlit.text_input("Fruit Asked For Adding","")
 if streamlit.button('Add a fruit'):
   back_from_fn = insert_row_snowflake(fruits_2b_added)
+  streamlit.text(back_from_fn)
+
+my_cnx.close()
