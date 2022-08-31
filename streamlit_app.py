@@ -24,7 +24,7 @@ streamlit.dataframe(fruits_to_show)
 # New sction
 streamlit.header("Fruityvice Fruit Advice!")
 fruits_asked = streamlit.text_input("Fruit Asked")
-if fruits_asked is not None or fruits_asked = "" :
+if fruits_asked is not None or fruits_asked == "" :
   streamlit.text("You entered:" + fruits_asked)
   fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruits_asked)
 else:
