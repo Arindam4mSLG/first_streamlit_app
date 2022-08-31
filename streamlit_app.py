@@ -57,7 +57,7 @@ streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
 streamlit.header("The fruit load list:")
-streamlit.dataframe(get_fruit_load_list)
+streamlit.dataframe(get_fruit_load_list())
 
 fruits_2b_added = streamlit.text_input("Fruit Asked","")
 if fruits_2b_added is None or fruits_asked == "" :
