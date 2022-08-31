@@ -27,7 +27,7 @@ fruits_asked = streamlit.text_input("Fruit Asked")
 if fruits_asked is not None:
   streamlit.text("You entered:" + fruits_asked)
   fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruits_asked)
-else
+else:
   streamlit.text("blank")
 # streamlit.text(fruityvice_response.json())
 
