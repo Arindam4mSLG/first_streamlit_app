@@ -23,18 +23,24 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
 # New sction
+
+def get_fruityvice_data(this_fruit_choice):
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruits_asked)
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  return fruityvice_normalized
+
 streamlit.header("Fruityvice Fruit Advice!")
-fruits_asked = streamlit.text_input("Fruit Asked","")
-if fruits_asked is None or fruits_asked == "" :
-  streamlit.text("blank")
-else:
-    streamlit.text("You entered:" + fruits_asked)
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruits_asked)
-    # streamlit.text(fruityvice_response.json())
-    # write your own comment -what does the next line do? 
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-    # write your own comment - what does this do?
-    streamlit.dataframe(fruityvice_normalized)
+try:
+  fruits_asked = streamlit.text_input("Fruit Asked")
+  if not fruits_asked:
+    streamlit.error("Please enter a fruit")
+  else:
+      streamlit.text("You entered:" + fruits_asked)
+      tabFruits = get_fruityvice_data(fruits_asked)
+      # write your own comment - what does this do?
+      streamlit.dataframe(tabFruits)
+except URLError as e:
+  streamlit.error()
 
 streamlit.stop()
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
