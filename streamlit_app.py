@@ -30,9 +30,10 @@ def get_fruityvice_data(this_fruit_choice):
   return fruityvice_normalized
 
 def get_fruit_load_list():
-  my_cur.execute("select * from fruit_load_list ")
-  my_data_row = my_cur.fetchall()
-  return my_data_row
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("select * from fruit_load_list ")
+    return = my_cur.fetchall()
+  
 
 streamlit.header("Fruityvice Fruit Advice!")
 try:
