@@ -59,7 +59,7 @@ streamlit.text(my_data_row)
 
 streamlit.header("The fruit load list:")
 my_data_rows = get_fruit_load_list()
-streamlit.dataframe(my_data_rows)
+# streamlit.dataframe(my_data_rows)
 
 fruits_2b_added = streamlit.text_input("Fruit Asked","")
 if fruits_2b_added is None or fruits_asked == "" :
